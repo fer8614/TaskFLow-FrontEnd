@@ -1,5 +1,6 @@
 import { Outlet } from "react-router-dom";
-import Logo from "../components/logo";
+import Logo from "@/components/logo";
+import NavMenu from "@/components/NavMenu";
 
 export default function AppLayout() {
   return (
@@ -9,6 +10,8 @@ export default function AppLayout() {
           <div className="w-64 ml-20">
             <Logo />
           </div>
+
+          <NavMenu />
         </div>
       </header>
 

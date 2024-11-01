@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import ProjectForm from "@/components/projects/ProjectForm";
 
 export default function CreateProjectView() {
   const initialValues = {
@@ -40,6 +41,8 @@ export default function CreateProjectView() {
           noValidate
           action=""
         >
+          <ProjectForm register={register} errors={errors} />
+
           <input
             type="submit"
             value="Create Project"

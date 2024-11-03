@@ -5,6 +5,3 @@ const api = axios.create({
 });
 
 export default api;
-console.log(import.meta.env.VITE_API_URL);
-
-console.log(api);

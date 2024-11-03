@@ -12,13 +12,13 @@ export default function ProjectForm({ errors, register }: ProjectFormProps) {
     <>
       <div className="mb-5 space-y-3">
         <label htmlFor="projectName" className="text-sm uppercase font-bold">
-          Project name
+          Project Name
         </label>
         <input
           id="projectName"
           className="w-full p-3  border border-gray-200"
           type="text"
-          placeholder="Project name"
+          placeholder="Project Name"
           {...register("projectName", {
             required: "Project name is required",
           })}

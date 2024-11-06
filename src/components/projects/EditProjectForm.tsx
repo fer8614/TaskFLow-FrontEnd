@@ -1,12 +1,18 @@
 import { Link } from "react-router-dom";
 import ProjectForm from "./ProjectForm";
-import { ProjectFormData } from "@/types/index";
+import { Project, ProjectFormData } from "@/types/index";
 import { useForm } from "react-hook-form";
+import { useMutation } from "@tanstack/react-query";
+import { updateProject } from "@/api/ProjectAPI";
 
 type EditProjectFormProps = {
   data: ProjectFormData;
+  projectId: Project["_id"];
 };
-export default function EditProjectFrom({ data }: EditProjectFormProps) {
+export default function EditProjectFrom({
+  data,
+  projectId,
+}: EditProjectFormProps) {
   const {
     register,
     handleSubmit,
@@ -19,8 +25,21 @@ export default function EditProjectFrom({ data }: EditProjectFormProps) {
     },
   });
 
+  const { mutate } = useMutation({
+    mutationFn: updateProject,
+    onError: (error) => {
+      console.log(error);
+    },
+    onSuccess: (data) => {
+      console.log(data);
+    },
+  });
   const handleForm = (formData: ProjectFormData) => {
-    console.log(formData);
+    const data = {
+      formData,
+      projectId,
+    };
+    mutate(data);
   };
 
   return (

@@ -92,7 +92,7 @@ export default function DashboardView() {
                             to={`/projects/${project._id}`}
                             className="block px-3 py-1 text-sm leading-6 text-gray-900"
                           >
-                            See Project
+                            View Project
                           </Link>
                         </Menu.Item>
                         <Menu.Item>

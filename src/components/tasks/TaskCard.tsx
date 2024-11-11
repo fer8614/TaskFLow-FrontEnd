@@ -1,7 +1,7 @@
 import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import EllipsisVerticalIcon from "@heroicons/react/20/solid/EllipsisVerticalIcon";
-import { Task } from "@/types/index";
+import type { Task } from "@/types/index";
 
 type TaskCardProps = {
   task: Task;

@@ -1,9 +1,32 @@
 import { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { useNavigate } from "react-router-dom";
+import { Task, TaskFormData } from "@/types/index";
+import { useForm } from "react-hook-form";
+import TaskForm from "./TaskForm";
 
-export default function EditTaskModal() {
+type EditTaskModalProps = {
+  data: Task;
+};
+
+export default function EditTaskModal({ data }: EditTaskModalProps) {
   const navigate = useNavigate();
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<TaskFormData>({
+    defaultValues: {
+      name: data.name,
+      description: data.description,
+    },
+  });
+
+  const handleEditTask = (formData: TaskFormData) => {
+    console.log(formData);
+  };
   return (
     <Transition appear show={true} as={Fragment}>
       <Dialog
@@ -36,15 +59,20 @@ export default function EditTaskModal() {
             >
               <Dialog.Panel className="w-full max-w-4xl transform overflow-hidden rounded-2xl bg-white text-left align-middle shadow-xl transition-all p-16">
                 <Dialog.Title as="h3" className="font-black text-4xl  my-5">
-                  Editar Tarea
+                  Edit Task
                 </Dialog.Title>
 
                 <p className="text-xl font-bold">
-                  Realiza cambios a una tarea en {""}
-                  <span className="text-fuchsia-600">este formulario</span>
+                  Make changes to a task in {""}
+                  <span className="text-fuchsia-600">this form</span>
                 </p>
 
-                <form className="mt-10 space-y-3" noValidate>
+                <form
+                  className="mt-10 space-y-3"
+                  onSubmit={handleSubmit(handleEditTask)}
+                  noValidate
+                >
+                  <TaskForm register={register} errors={errors} />
                   <input
                     type="submit"
                     className=" bg-fuchsia-600 hover:bg-fuchsia-700 w-full p-3  text-white font-black  text-xl cursor-pointer"

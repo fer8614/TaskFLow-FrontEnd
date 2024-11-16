@@ -1,11 +1,6 @@
-import { Fragment } from "react";
+import { Fragment, useEffect } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import {
-  Navigate,
-  useLocation,
-  useNavigate,
-  useParams,
-} from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { getTaskById } from "@/api/TaskAPI";
 import { toast } from "react-toastify";
@@ -21,17 +16,19 @@ export default function TaskModalDetails() {
 
   const show = taskId ? true : false;
 
-  const { data, isError } = useQuery({
+  const { data, isError, error } = useQuery({
     queryKey: ["task", taskId],
     queryFn: () => getTaskById({ projectId, taskId }),
     enabled: !!taskId,
     retry: false,
   });
 
-  if (isError) {
-    toast.error("Task not found", { toastId: "error" });
-    return <Navigate to={`/projects/${projectId}`} />;
-  }
+  useEffect(() => {
+    if (isError) {
+      toast.error(error.message, { toastId: "error" });
+      navigate(`/projects/${projectId}`);
+    }
+  }, [isError, error, navigate, projectId]);
 
   return (
     <>

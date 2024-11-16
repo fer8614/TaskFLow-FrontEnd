@@ -1,8 +1,11 @@
 import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import EllipsisVerticalIcon from "@heroicons/react/20/solid/EllipsisVerticalIcon";
+import { useNavigate, useParams } from "react-router-dom";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import type { Task } from "@/types/index";
-import { useNavigate } from "react-router-dom";
+import { deleteTask } from "@/api/TaskAPI";
+import { toast } from "react-toastify";
 
 type TaskCardProps = {
   task: Task;
@@ -10,6 +13,21 @@ type TaskCardProps = {
 
 export default function TaskCard({ task }: TaskCardProps) {
   const navigate = useNavigate();
+  const params = useParams();
+  const projectId = params.projectId!;
+
+  const queryClient = useQueryClient();
+
+  const { mutate } = useMutation({
+    mutationFn: deleteTask,
+    onError: (error) => {
+      toast.error(error.message);
+    },
+    onSuccess: (data) => {
+      toast.success(data);
+      queryClient.invalidateQueries({ queryKey: ["project", projectId] });
+    },
+  });
 
   return (
     <li className="p-5 bg-white border-slate-300 flex justify-between gap-3">
@@ -62,6 +80,7 @@ export default function TaskCard({ task }: TaskCardProps) {
                 <button
                   type="button"
                   className="block px-3 py-1 text-sm leading-6 text-red-500"
+                  onClick={() => mutate({ projectId, taskId: task._id })}
                 >
                   Delete Task
                 </button>

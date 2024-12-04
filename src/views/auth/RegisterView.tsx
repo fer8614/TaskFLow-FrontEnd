@@ -137,6 +137,13 @@ export default function RegisterView() {
         >
           Already have an account? Log in
         </Link>
+
+        <Link
+          to={"/auth/forgot-password"}
+          className="text-center text-gray-300 font-normal"
+        >
+          Forgot your password? Reset
+        </Link>
       </nav>
     </>
   );

@@ -38,7 +38,7 @@ export default function ProjectDetailsView() {
             to={"team"}
             className="bg-fuchsia-600 hover:bg-fuchsia-700 px-10 py-3 text-white text-xl font-bold cursor-pointer transition-colors"
           >
-            Collaborators
+            Associates
           </Link>
         </nav>
         <TaskList tasks={data.tasks} />

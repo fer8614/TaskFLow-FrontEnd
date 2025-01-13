@@ -1,4 +1,4 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { TeamMember } from "@/types/index";
 import { addUserToProject } from "@/api/TeamAPI";
 import { toast } from "react-toastify";
@@ -13,6 +13,7 @@ export default function SearchResult({ user, reset }: SearchResultProps) {
   const navigate = useNavigate();
   const param = useParams();
   const projectId = param.projectId!;
+  const queryClient = useQueryClient();
 
   const { mutate } = useMutation({
     mutationFn: addUserToProject,
@@ -23,6 +24,7 @@ export default function SearchResult({ user, reset }: SearchResultProps) {
       toast.success(data);
       reset();
       navigate(location.pathname, { replace: true });
+      queryClient.invalidateQueries({ queryKey: ["projectTeam", projectId] });
     },
   });
 

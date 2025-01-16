@@ -95,11 +95,11 @@ export default function TaskModalDetails() {
                     </p>
                     <Dialog.Title
                       as="h3"
-                      className="font-black text-4xl text-slate-600 my-5"
+                      className="font-black text-4xl text-slate-600 my-5 w-full break-words"
                     >
                       {data.name}
                     </Dialog.Title>
-                    <p className="text-lg text-slate-500 mb-2">
+                    <p className="text-lg text-slate-500 mb-2 w-full break-words">
                       Description: {data.description}
                     </p>
 

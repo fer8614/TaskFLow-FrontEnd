@@ -17,7 +17,6 @@ export async function createNote({
     const url = `/projects/${projectId}/tasks/${taskId}/notes`;
     const { data } = await api.post<string>(url, formData);
     return data;
-    return;
   } catch (error) {
     if (isAxiosError(error) && error.response) {
       throw new Error(error.response.data.error);

@@ -33,9 +33,9 @@ export default function ProfileForm({ data }: ProfileFormProps) {
   return (
     <>
       <div className="mx-auto max-w-3xl g">
-        <h1 className="text-5xl font-black ">Mi Perfil</h1>
+        <h1 className="text-5xl font-black ">Mi Profile</h1>
         <p className="text-2xl font-light text-gray-500 mt-5">
-          Aquí puedes actualizar tu información
+          Here you can update your information
         </p>
 
         <form
@@ -45,15 +45,15 @@ export default function ProfileForm({ data }: ProfileFormProps) {
         >
           <div className="mb-5 space-y-3">
             <label className="text-sm uppercase font-bold" htmlFor="name">
-              Nombre
+              Name
             </label>
             <input
               id="name"
               type="text"
-              placeholder="Tu Nombre"
+              placeholder="Your Name"
               className="w-full p-3  border border-gray-200"
               {...register("name", {
-                required: "Nombre de usuario es obligatoro",
+                required: "Username is required",
               })}
             />
             {errors.name && <ErrorMessage>{errors.name.message}</ErrorMessage>}
@@ -61,18 +61,18 @@ export default function ProfileForm({ data }: ProfileFormProps) {
 
           <div className="mb-5 space-y-3">
             <label className="text-sm uppercase font-bold" htmlFor="password">
-              E-mail
+              Email
             </label>
             <input
               id="text"
               type="email"
-              placeholder="Tu Email"
+              placeholder="Your Email"
               className="w-full p-3  border border-gray-200"
               {...register("email", {
-                required: "EL e-mail es obligatorio",
+                required: "Email is required",
                 pattern: {
                   value: /\S+@\S+\.\S+/,
-                  message: "E-mail no válido",
+                  message: "Invalid email",
                 },
               })}
             />
@@ -82,7 +82,7 @@ export default function ProfileForm({ data }: ProfileFormProps) {
           </div>
           <input
             type="submit"
-            value="Guardar Cambios"
+            value="Save Changes"
             className="bg-fuchsia-600 w-full p-3 text-white uppercase font-bold hover:bg-fuchsia-700 cursor-pointer transition-colors"
           />
         </form>

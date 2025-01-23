@@ -1,10 +1,13 @@
 import { useForm } from "react-hook-form";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import { UserRegistrationForm } from "@/types/index";
 import ErrorMessage from "@/components/ErrorMessage";
 import { createAccount } from "@/api/AuthAPI";
 import { toast } from "react-toastify";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 
 export default function RegisterView() {
   const initialValues: UserRegistrationForm = {
@@ -34,6 +37,9 @@ export default function RegisterView() {
   });
 
   const password = watch("password");
+
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const handleRegister = (formData: UserRegistrationForm) => mutate(formData);
 
@@ -85,39 +91,56 @@ export default function RegisterView() {
 
         <div className="flex flex-col gap-5">
           <label className="font-normal text-2xl">Password</label>
-
-          <input
-            type="password"
-            placeholder="Registration password"
-            className="w-full p-3  border-gray-300 border"
-            {...register("password", {
-              required: "Password is required",
-              minLength: {
-                value: 8,
-                message: "The password must be at least 8 characters long",
-              },
-            })}
-          />
+          <div className="relative">
+            <input
+              type={showNewPassword ? "text" : "password"}
+              placeholder="Registration password"
+              className="w-full p-3  border-gray-300 border"
+              {...register("password", {
+                required: "Password is required",
+                minLength: {
+                  value: 8,
+                  message: "The password must be at least 8 characters long",
+                },
+              })}
+            />
+            <button
+              type="button"
+              onClick={() => setShowNewPassword(!showNewPassword)}
+              className="absolute inset-y-0 right-0 p-3"
+            >
+              <FontAwesomeIcon icon={showNewPassword ? faEyeSlash : faEye} />
+            </button>
+          </div>
           {errors.password && (
             <ErrorMessage>{errors.password.message}</ErrorMessage>
           )}
         </div>
 
         <div className="flex flex-col gap-5">
-          <label className="font-normal text-2xl">Repetir Password</label>
-
-          <input
-            id="password_confirmation"
-            type="password"
-            placeholder="Repeat Registration Password"
-            className="w-full p-3  border-gray-300 border"
-            {...register("password_confirmation", {
-              required: "Repeat Password is required",
-              validate: (value) =>
-                value === password || "Passwords are not equal",
-            })}
-          />
-
+          <label className="font-normal text-2xl">Repeat Password</label>
+          <div className="relative">
+            <input
+              id="password_confirmation"
+              type={showConfirmPassword ? "text" : "password"}
+              placeholder="Repeat Registration Password"
+              className="w-full p-3  border-gray-300 border"
+              {...register("password_confirmation", {
+                required: "Repeat Password is required",
+                validate: (value) =>
+                  value === password || "Passwords are not equal",
+              })}
+            />
+            <button
+              type="button"
+              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+              className="absolute inset-y-0 right-0 p-3"
+            >
+              <FontAwesomeIcon
+                icon={showConfirmPassword ? faEyeSlash : faEye}
+              />
+            </button>
+          </div>
           {errors.password_confirmation && (
             <ErrorMessage>{errors.password_confirmation.message}</ErrorMessage>
           )}

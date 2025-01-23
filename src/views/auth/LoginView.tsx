@@ -1,10 +1,13 @@
 import { useForm } from "react-hook-form";
+import { useState } from "react";
 import { UserLoginForm } from "@/types/index";
 import { useMutation } from "@tanstack/react-query";
 import ErrorMessage from "@/components/ErrorMessage";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { authenticateUser } from "@/api/AuthAPI";
 import { toast } from "react-toastify";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 
 export default function LoginView() {
   const initialValues: UserLoginForm = {
@@ -29,6 +32,8 @@ export default function LoginView() {
     },
   });
 
+  const [showCurrentPassword, setShowCurrentPassword] = useState(false);
+
   const handleLogin = (formData: UserLoginForm) => mutate(formData);
 
   return (
@@ -45,7 +50,6 @@ export default function LoginView() {
       >
         <div className="flex flex-col gap-5">
           <label className="font-normal text-2xl">Email</label>
-
           <input
             id="email"
             type="email"
@@ -64,15 +68,25 @@ export default function LoginView() {
 
         <div className="flex flex-col gap-5">
           <label className="font-normal text-2xl">Password</label>
-
-          <input
-            type="password"
-            placeholder="Password to register"
-            className="w-full p-3  border-gray-300 border"
-            {...register("password", {
-              required: "Password is required",
-            })}
-          />
+          <div className="relative">
+            <input
+              type={showCurrentPassword ? "text" : "password"}
+              placeholder="Password to register"
+              className="w-full p-3  border-gray-300 border"
+              {...register("password", {
+                required: "Password is required",
+              })}
+            />
+            <button
+              type="button"
+              onClick={() => setShowCurrentPassword(!showCurrentPassword)}
+              className="absolute inset-y-0 right-0 p-3"
+            >
+              <FontAwesomeIcon
+                icon={showCurrentPassword ? faEyeSlash : faEye}
+              />
+            </button>
+          </div>
           {errors.password && (
             <ErrorMessage>{errors.password.message}</ErrorMessage>
           )}

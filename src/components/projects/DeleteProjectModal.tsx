@@ -6,9 +6,13 @@ import { useForm } from "react-hook-form";
 import ErrorMessage from "../ErrorMessage";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import { CheckPasswordForm } from "@/types/index";
+import { useMutation } from "@tanstack/react-query";
+import { checkPassword } from "@/api/AuthAPI";
+import { toast } from "react-toastify";
 
 export default function DeleteProjectModal() {
-  const initialValues = {
+  const initialValues: CheckPasswordForm = {
     password: "",
   };
   const location = useLocation();
@@ -24,7 +28,14 @@ export default function DeleteProjectModal() {
     formState: { errors },
   } = useForm({ defaultValues: initialValues });
 
-  const handleForm = async (formData) => {};
+  const checkPasswordMutation = useMutation({
+    mutationFn: checkPassword,
+    onError: (error) => toast.error(error.message),
+  });
+  const handleForm = async (formData: CheckPasswordForm) => {
+    await checkPasswordMutation.mutateAsync(formData);
+    console.log("Efter mutation.......");
+  };
 
   const [showCurrentPassword, setShowCurrentPassword] = useState(false);
 

@@ -6,7 +6,7 @@ import DropTask from "./DropTask";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { updateStatus } from "@/api/TaskAPI";
 import { toast } from "react-toastify";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 type TaskListProps = {
   tasks: Task[];
@@ -36,7 +36,6 @@ export default function TaskList({ tasks, canEdit }: TaskListProps) {
   const params = useParams();
   const projectId = params.projectId!;
   const queryClient = useQueryClient();
-  const navigate = useNavigate();
 
   const { mutate } = useMutation({
     mutationFn: updateStatus,
@@ -62,6 +61,16 @@ export default function TaskList({ tasks, canEdit }: TaskListProps) {
       const status = over.id as TaskStatus;
 
       mutate({ projectId, taskId, status });
+
+      queryClient.setQueryData(["project", projectId], (prevData) => {
+        const updatedTasks = prevData.tasks.map((task: Task) => {
+          if (task._id === taskId) {
+            return { ...task, status };
+          }
+          return task;
+        });
+        return { ...prevData, tasks: updatedTasks };
+      });
     }
   };
 

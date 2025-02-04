@@ -1,4 +1,4 @@
-# FrontEnd - MEAR Stack - Project TaskFlow
+# FrontEnd - MERN Stack - Project TaskFlow
 
 ## Table of Contents
 - [Description](#description)

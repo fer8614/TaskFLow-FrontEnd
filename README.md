@@ -1,4 +1,4 @@
-# TaskFlow - Frontend
+# FrontEnd - MEAR Stack - Project TaskFlow
 
 ## Table of Contents
 - [Description](#description)
@@ -51,7 +51,7 @@ TaskFlow is a modern task management application built using the MERN stack (Mon
 ### Installation
 1. Clone the repository
 ```bash
-git clone https://github.com/yourusername/taskflow-frontend.git
+git clone https://github.com/fer8614/TaskFLow-FrontEnd
 ```
 
 2. Navigate to the project directory
@@ -67,8 +67,8 @@ yarn install
 ```
 
 4. Create a .env file in the root directory
-```env
-VITE_API_URL=http://localhost:3000/api
+```env.local
+VITE_API_URL=http://localhost:4000/api
 ```
 
 5. Start the development server
